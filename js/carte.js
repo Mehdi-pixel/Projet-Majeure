@@ -7,6 +7,11 @@ function Allumeylefuego(data){
           'fillColor': '#FFFF00',
           'fillOpacity': 0.2,
       }).addTo(carte);
+      influence.bindPopup('');
+      var Elinfodelfuego = influence.getPopup();
+      
+      Elinfodelfuego.setContent('Type of fire : ' + data[i].type + " Intensity of the fire : " + data[i].intensity + "\r \n Range of the fire : " + data[i].range);
+      influence.openPopup();
     } 
 }
 
