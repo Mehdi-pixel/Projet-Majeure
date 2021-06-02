@@ -4,11 +4,11 @@ function changeIntensity(){
   return x;
   }
 
-  function changeRange(){
-    var y = document.getElementById("rangeSlider").value;
-    document.getElementById("rangeNumber").innerHTML = y;
-    return y;
-    }
+function changeRange(){
+  var y = document.getElementById("rangeSlider").value;
+  document.getElementById("rangeNumber").innerHTML = y;
+  return y;
+  }
 
 
 function Allumeylefuego(data){
@@ -18,6 +18,21 @@ function Allumeylefuego(data){
   CfireArray = [];
   DfireArray = [];
   EfireArray = [];
+
+tenIntensityFireArray = [];
+twentyIntensityFireArray = [];
+thirtyIntensityFireArray = [];
+fortyIntensityFireArray = [];
+fiftyIntensityFireArray = [];
+
+tenRangeFireArray = [];
+twentyRangeFireArray = [];
+thirtyRangeFireArray = [];
+fortyRangeFireArray = [];
+fiftyRangeFireArray = [];
+
+
+
     for (let i =0; i <data.length; i++){
       var Feu = L.circle([data[i].lat, data[i].lon], 210, {
           'color': '#FF7F00',
@@ -53,6 +68,38 @@ function Allumeylefuego(data){
         case "E_Electric" :
           EfireArray.push(Feu);
           break
+      }
+      
+      if (data.intensity <= 10){
+        tenIntensityFireArray.push(Fire);
+      }
+      if (data.intensity <= 20 && data.intensity > 10){
+        twentyIntensityFireArray.push(Fire);
+      }
+      if (data.intensity <= 30 && data.intensity > 20){
+        thirtyIntensityFireArray.push(Fire);
+      }
+      if (data.intensity <= 40 && data.intensity > 30){
+        fortyIntensityFireArray.push(Fire);
+      }
+      if (data.intensity <= 50 && data.intensity > 40){
+        fiftyIntensityFireArray.push(Fire);
+      }
+      
+      if (data.range <= 10){
+        tenRangeFireArray.push(Fire);
+      }
+      if (data.range <= 20 && data.range > 10){
+        twentyRangeFireArray.push(Fire);
+      }
+      if (data.range <= 30 && data.range > 20){
+        thirtyRangeFireArray.push(Fire);
+      }
+      if (data.range <= 40 && data.range > 30){
+        fortyRangeFireArray.push(Fire);
+      }
+      if (data.range <= 50 && data.range > 40){
+        fiftyRangeFireArray.push(Fire);
       }
 
 
