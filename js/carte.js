@@ -1,3 +1,16 @@
+function changeIntensity(){
+  var x = document.getElementById("intensitySlider").value;
+  document.getElementById("intensityNumber").innerHTML = x;
+  return x;
+  }
+
+  function changeRange(){
+    var y = document.getElementById("rangeSlider").value;
+    document.getElementById("rangeNumber").innerHTML = y;
+    return y;
+    }
+
+
 function Allumeylefuego(data){
   console.log(data)
   AfireArray = [];
@@ -11,7 +24,7 @@ function Allumeylefuego(data){
           'fill': true,
           'fillColor': '#FFFF00',
           'fillOpacity': 0.2,
-      })//.addTo(carte);
+      });
       switch (data[i].type) {
         case "A" :
           AfireArray.push(Feu);
@@ -42,18 +55,23 @@ function Allumeylefuego(data){
           break
       }
 
-      var Afires = L.layerGroup(AfireArray).addTo(carte);
-      var Bfires = L.layerGroup(BfireArray).addTo(carte);
-      var Cfires = L.layerGroup(CfireArray).addTo(carte);
-      var Dfires = L.layerGroup(DfireArray).addTo(carte);
-      var Efires = L.layerGroup(EfireArray).addTo(carte);
 
       Feu.bindPopup('');
       var Elinfodelfuego = Feu.getPopup();
       Elinfodelfuego.setContent("<p>"+ "Type of fire : " + data[i].type + "<br />" + "Intensity of the fire : " + data[i].intensity + "<br />" + "Range of the fire : " + data[i].range + "</p>");
       Feu.openPopup();
     } 
+    var Afires = L.layerGroup(AfireArray).addTo(carte);
+    var Bfires = L.layerGroup(BfireArray).addTo(carte);
+    var Cfires = L.layerGroup(CfireArray).addTo(carte);
+    var Dfires = L.layerGroup(DfireArray).addTo(carte);
+    var Efires = L.layerGroup(EfireArray).addTo(carte);
 
+    for (let i=0; i < data.length; i++){
+
+
+
+    }
     var Overlay = {
       "Feux secs": Afires,
       "Feux gras": Bfires,
@@ -86,4 +104,12 @@ function FIRESTORM(){
         });
         
 }
+
+
+
+
+
+
+
+
 
