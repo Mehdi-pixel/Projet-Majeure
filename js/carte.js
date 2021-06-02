@@ -9,8 +9,7 @@ function Allumeylefuego(data){
       }).addTo(carte);
       influence.bindPopup('');
       var Elinfodelfuego = influence.getPopup();
-      
-      Elinfodelfuego.setContent('Type of fire : ' + data[i].type + " Intensity of the fire : " + data[i].intensity + "\r \n Range of the fire : " + data[i].range);
+      Elinfodelfuego.setContent("<p>"+ "Type of fire : " + data[i].type + "<br />" + "Intensity of the fire : " + data[i].intensity + "<br />" + "Range of the fire : " + data[i].range + "</p>");
       influence.openPopup();
     } 
 }
