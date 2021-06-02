@@ -1,20 +1,13 @@
 function Allumeylefuego(data){
   console.log(data)
-  coordonnayLati=[];
-  coordonnayLong=[];
-  for (let i =0; i <length(data); i++){
-    coordonnayLati.push(data[i][3]);
-    coordonnayLong.push(data[i][4]);
-  }         
-  
-  console.log(data.lon);
-
-  var influence = L.circle(coords, 210000, {
-      'color': '#FF7F00',
-      'fill': true,
-      'fillColor': '#FFFF00',
-      'fillOpacity': 0.2,
-  }).addTo(carte);
+    for (let i =0; i <data.length; i++){
+      var influence = L.circle([data[i].lat, data[i].lon], 210, {
+          'color': '#FF7F00',
+          'fill': true,
+          'fillColor': '#FFFF00',
+          'fillOpacity': 0.2,
+      }).addTo(carte);
+    } 
 }
 
 
