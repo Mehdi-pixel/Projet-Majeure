@@ -31,14 +31,26 @@ thirtyRangeFireArray = [];
 fortyRangeFireArray = [];
 fiftyRangeFireArray = [];
 
+function coco(type){ 
+  console.log(type);
+  switch (type) {
+    case "A" : return "#f56042";
+    case "B_Plastics" : return "#ad6a18";
+    case "B_Alcohol" : return "#ad6a18";
+    case "B_Gasoline" : return "#ad6a18";
+    case "C_Flammable_Gases" : return "#bd1989";
+    case "D_Metals" : return "#6d009c";
+    case "E_Electric" : return "#ebdb00";
+}         }
+
 
 
     for (let i =0; i <data.length; i++){
-      var Feu = L.circle([data[i].lat, data[i].lon], 210, {
-          'color': '#FF7F00',
+      var Feu = L.circle([data[i].lat, data[i].lon], 150, {
+          'color': coco(data[i].type),
           'fill': true,
-          'fillColor': '#FFFF00',
-          'fillOpacity': 0.2,
+          'fillColor': coco(data[i].type),
+          'fillOpacity': 0.5,
       });
       switch (data[i].type) {
         case "A" :
@@ -119,7 +131,7 @@ fiftyRangeFireArray = [];
 
     for (let i=0; i < data.length; i++){
 
-//ADDLAYER
+
 
     }
     var Overlay = {
@@ -155,10 +167,22 @@ function FIRESTORM(){
         
 }
 
+function filter(Feux,seuil){
+  Feux.clearLayers();
 
-function filter(Feu,seuil){
+  newFeux = new L.geoJson(exp_popplaces,{
+    onEachFeature: pop_popplaces,
+        filter:
+            function(feature, layer) {
+                 return (feature.properties.pop_max <= rangeMax) && (feature.properties.pop_max >= rangeMin);
+            },
+    pointToLayer: popplaces_marker})
+
+      //and back again into the cluster group
+  Feux.addLayer(popplaces);
   /*
   Reload tous les layers !
+  Feux
 
   Vérification de la condition
 
