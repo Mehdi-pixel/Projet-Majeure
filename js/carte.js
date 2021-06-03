@@ -1,4 +1,5 @@
 function Allumeylefuego(data){
+  console.log(data)
   AfireArray = [];
   BfireArray = [];
   CfireArray = [];
@@ -86,43 +87,3 @@ function FIRESTORM(){
         
 }
 
-
-
-function Rodeo(data){
-  console.log(data);
-  for(let j=1; j<data.length; j++){
-    var Vehicle = L.marker([data[j].lat, data[j].lon]).addTo(carte);
-    Vehicle.bindPopup(''); // Je ne mets pas de texte par défaut
-    var Linfodelvagone = Vehicle.getPopup();
-    Linfodelvagone.setContent("<p>"+ "Available crew : " + data[j].crewMember + "<br />" + "Maximum crew : " + data[j].crewMemberCapacity + "<br />" + "Efficiency : " + data[j].efficiency + "<br />" + "Remaining fuel : " + data[j].fuel + "<br />" + "Fuel consumption : " + data[j].fuelConsumption + "<br />" + "Currently loaded liquid : " + data[j].liquidType + "<br />" + "Available liquid : " + data[j].liquidQuantity + "<br />" + "Liquid consumption : " + data[j].liquidConsumption +  "</p>");
-
-  }
-
-}
-
-
-function HIGHWAYTOHELL(){
-  fetch("http://localhost:8081/vehicle")
-      .then(
-        function(response) {
-          if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
-            return;
-          }
-    
-          // Examine the text in the response
-            response.json()
-        .then(data => Rodeo(data));
-        }
-      )
-      .catch(function(err) {
-        console.log('Fetch Error :-S', err);
-      });
-    }
-
-
-    function AFINEADDITION(){
-      VehicleType= document.getElementById("VehicleType");
-      LiquidType= document.getElementById("LiquidType");
-    }
