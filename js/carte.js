@@ -70,36 +70,36 @@ fiftyRangeFireArray = [];
           break
       }
       
-      if (data.intensity <= 10){
-        tenIntensityFireArray.push(Fire);
+      if (data[i].intensity <= 10){
+        tenIntensityFireArray.push(Feu);
       }
-      if (data.intensity <= 20 && data.intensity > 10){
-        twentyIntensityFireArray.push(Fire);
+      if (data[i].intensity <= 20){
+        twentyIntensityFireArray.push(Feu);
       }
-      if (data.intensity <= 30 && data.intensity > 20){
-        thirtyIntensityFireArray.push(Fire);
+      if (data[i].intensity <= 30){
+        thirtyIntensityFireArray.push(Feu);
       }
-      if (data.intensity <= 40 && data.intensity > 30){
-        fortyIntensityFireArray.push(Fire);
+      if (data[i].intensity <= 40){
+        fortyIntensityFireArray.push(Feu);
       }
-      if (data.intensity <= 50 && data.intensity > 40){
-        fiftyIntensityFireArray.push(Fire);
+      if (data[i].intensity <= 50){
+        fiftyIntensityFireArray.push(Feu);
       }
       
-      if (data.range <= 10){
-        tenRangeFireArray.push(Fire);
+      if (data[i].range <= 10){
+        tenRangeFireArray.push(Feu);
       }
-      if (data.range <= 20 && data.range > 10){
-        twentyRangeFireArray.push(Fire);
+      if (data[i].range <= 20){
+        twentyRangeFireArray.push(Feu);
       }
-      if (data.range <= 30 && data.range > 20){
-        thirtyRangeFireArray.push(Fire);
+      if (data[i].range <= 30){
+        thirtyRangeFireArray.push(Feu);
       }
-      if (data.range <= 40 && data.range > 30){
-        fortyRangeFireArray.push(Fire);
+      if (data[i].range <= 40){
+        fortyRangeFireArray.push(Feu);
       }
-      if (data.range <= 50 && data.range > 40){
-        fiftyRangeFireArray.push(Fire);
+      if (data[i].range <= 50){
+        fiftyRangeFireArray.push(Feu);
       }
 
 
@@ -114,9 +114,12 @@ fiftyRangeFireArray = [];
     var Dfires = L.layerGroup(DfireArray).addTo(carte);
     var Efires = L.layerGroup(EfireArray).addTo(carte);
 
+    var tenIntensityFires = L.layerGroup(tenIntensityFireArray).addTo(carte);
+
+
     for (let i=0; i < data.length; i++){
 
-
+//ADDLAYER
 
     }
     var Overlay = {
@@ -153,7 +156,26 @@ function FIRESTORM(){
 }
 
 
+function filter(Feu,seuil){
+  /*
+  Reload tous les layers !
 
+  Vérification de la condition
+
+
+  Redessinement des layers concernés
+
+
+
+
+
+
+
+  */
+
+
+
+}
 
 
 
