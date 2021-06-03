@@ -8,29 +8,63 @@
     </head>
 
     <style>
-        html, body { height: 100% }
+        html, body { height: 90% }
     </style>
 
-    <body onload="FIRESTORM()" >
+    <body onload="FIRESTORM(); HIGHWAYTOHELL()" >
         <div id="map" style="width:100%; height:100%"></div>
 	<script>
           var carte = L.map('map').setView([46,5], 10);
           L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           }).addTo(carte);
-          var Mark=L.marker([46, 5]).addTo(carte);
+          var NuovaVettura=L.marker([46, 5]).addTo(carte);
+          carte.on('click', CreateVehicle);
+
+        function CreateVehicle(e) {
+            NuovaVettura.setLatLng(e.latlng);
+            var curPos = NuovaVettura.getLatLng();
+            alert(curPos.lng + " : " + curPos.lat);               
+        };
+
         </script>
 
-<h3>Range :</h3>
-<div class="rangeSlideContainer">
-    <input type="range" min="0" max="50" value="50" id="rangeSlider" onchange="changeRange()">
-    Currently displaying fires with an range of <span id="rangeNumber">50</span> or lower.
+
+<div>
+    <form><label for="NewVehicle">To create a new vehicle, fill the following form and then click on the map : </label>
+
+        <select name="Liquid Type" id="LiquidType">
+            <option value="">--Please choose an option--</option>
+            <option value="WATER">Water </option>
+            <option value="WATER_WITH_ADDITIVES">Water with additives</option>    
+            <option value="CARBON_DIOXIDE">Carbon dioxide</option>
+            <option value="POWDER">Powder</option>   
+        </select>
+        <select name="Vehicle Type" id="VehicleType">
+            <option value="">--Please choose an option--</option>
+            <option value="CAR">Car </option>
+            <option value="FIRE_ENGINE">Fire engine</option>    
+            <option value="PUMPER_TRUCKS">Pumper trucks</option>
+            <option value="WATER_TENDERS">Water tenders</option>
+            <option value="TURNTABLE_LADDER_TRUCK">Ladder trucks</option>
+            <option value="TRUCK">Trucks</option>         
+        </select>
+        <button type="submit" value="submit"> Create your vehicle :
+
+        </button>
+    </form>      
 </div>
-<h3>Intensity :</h3>
+
 <div class="intensitySlideContainer">
-    <input type="range" min="0" max="50" value="50" id="intensitySlider" onchange="changeIntensity()">
-    Currently displaying fires with an intensity of <span id="intensityNumber">50</span> or lower.
+    <input type="range" min="1" max="100" value="50" class="slider" id="intensitySlider">
+</div>
+
+<div class="rangeSlideContainer">
+    <input type="range" min="1" max="100" value="50" class="slider" id="rangeSlider">
 </div>
  
+
+
+
     </body>
 </html>

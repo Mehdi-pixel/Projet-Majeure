@@ -1,57 +1,16 @@
-function changeIntensity(){
-  var x = document.getElementById("intensitySlider").value;
-  document.getElementById("intensityNumber").innerHTML = x;
-  return x;
-  }
-
-function changeRange(){
-  var y = document.getElementById("rangeSlider").value;
-  document.getElementById("rangeNumber").innerHTML = y;
-  return y;
-  }
-
-
 function Allumeylefuego(data){
-  console.log(data)
   AfireArray = [];
   BfireArray = [];
   CfireArray = [];
   DfireArray = [];
   EfireArray = [];
-
-tenIntensityFireArray = [];
-twentyIntensityFireArray = [];
-thirtyIntensityFireArray = [];
-fortyIntensityFireArray = [];
-fiftyIntensityFireArray = [];
-
-tenRangeFireArray = [];
-twentyRangeFireArray = [];
-thirtyRangeFireArray = [];
-fortyRangeFireArray = [];
-fiftyRangeFireArray = [];
-
-function coco(type){ 
-  console.log(type);
-  switch (type) {
-    case "A" : return "#f56042";
-    case "B_Plastics" : return "#ad6a18";
-    case "B_Alcohol" : return "#ad6a18";
-    case "B_Gasoline" : return "#ad6a18";
-    case "C_Flammable_Gases" : return "#bd1989";
-    case "D_Metals" : return "#6d009c";
-    case "E_Electric" : return "#ebdb00";
-}         }
-
-
-
     for (let i =0; i <data.length; i++){
-      var Feu = L.circle([data[i].lat, data[i].lon], 150, {
-          'color': coco(data[i].type),
+      var Feu = L.circle([data[i].lat, data[i].lon], 210, {
+          'color': '#FF7F00',
           'fill': true,
-          'fillColor': coco(data[i].type),
-          'fillOpacity': 0.5,
-      });
+          'fillColor': '#FFFF00',
+          'fillOpacity': 0.2,
+      })//.addTo(carte);
       switch (data[i].type) {
         case "A" :
           AfireArray.push(Feu);
@@ -81,59 +40,19 @@ function coco(type){
           EfireArray.push(Feu);
           break
       }
-      
-      if (data[i].intensity <= 10){
-        tenIntensityFireArray.push(Feu);
-      }
-      if (data[i].intensity <= 20){
-        twentyIntensityFireArray.push(Feu);
-      }
-      if (data[i].intensity <= 30){
-        thirtyIntensityFireArray.push(Feu);
-      }
-      if (data[i].intensity <= 40){
-        fortyIntensityFireArray.push(Feu);
-      }
-      if (data[i].intensity <= 50){
-        fiftyIntensityFireArray.push(Feu);
-      }
-      
-      if (data[i].range <= 10){
-        tenRangeFireArray.push(Feu);
-      }
-      if (data[i].range <= 20){
-        twentyRangeFireArray.push(Feu);
-      }
-      if (data[i].range <= 30){
-        thirtyRangeFireArray.push(Feu);
-      }
-      if (data[i].range <= 40){
-        fortyRangeFireArray.push(Feu);
-      }
-      if (data[i].range <= 50){
-        fiftyRangeFireArray.push(Feu);
-      }
 
+      var Afires = L.layerGroup(AfireArray).addTo(carte);
+      var Bfires = L.layerGroup(BfireArray).addTo(carte);
+      var Cfires = L.layerGroup(CfireArray).addTo(carte);
+      var Dfires = L.layerGroup(DfireArray).addTo(carte);
+      var Efires = L.layerGroup(EfireArray).addTo(carte);
 
       Feu.bindPopup('');
       var Elinfodelfuego = Feu.getPopup();
       Elinfodelfuego.setContent("<p>"+ "Type of fire : " + data[i].type + "<br />" + "Intensity of the fire : " + data[i].intensity + "<br />" + "Range of the fire : " + data[i].range + "</p>");
       Feu.openPopup();
     } 
-    var Afires = L.layerGroup(AfireArray).addTo(carte);
-    var Bfires = L.layerGroup(BfireArray).addTo(carte);
-    var Cfires = L.layerGroup(CfireArray).addTo(carte);
-    var Dfires = L.layerGroup(DfireArray).addTo(carte);
-    var Efires = L.layerGroup(EfireArray).addTo(carte);
 
-    var tenIntensityFires = L.layerGroup(tenIntensityFireArray).addTo(carte);
-
-
-    for (let i=0; i < data.length; i++){
-
-
-
-    }
     var Overlay = {
       "Feux secs": Afires,
       "Feux gras": Bfires,
@@ -165,40 +84,6 @@ function FIRESTORM(){
           console.log('Fetch Error :-S', err);
         });
         
-}
-
-function filter(Feux,seuil){
-  Feux.clearLayers();
-
-  newFeux = new L.geoJson(exp_popplaces,{
-    onEachFeature: pop_popplaces,
-        filter:
-            function(feature, layer) {
-                 return (feature.properties.pop_max <= rangeMax) && (feature.properties.pop_max >= rangeMin);
-            },
-    pointToLayer: popplaces_marker})
-
-      //and back again into the cluster group
-  Feux.addLayer(popplaces);
-  /*
-  Reload tous les layers !
-  Feux
-
-  Vérification de la condition
-
-
-  Redessinement des layers concernés
-
-
-
-
-
-
-
-  */
-
-
-
 }
 
 
@@ -237,7 +122,7 @@ function HIGHWAYTOHELL(){
     }
 
 
-
-
-
-
+    function AFINEADDITION(){
+      VehicleType= document.getElementById("VehicleType");
+      LiquidType= document.getElementById("LiquidType");
+    }
