@@ -11,15 +11,41 @@
         html, body { height: 100% }
     </style>
 
-    <body onload="FIRESTORM()" >
+    <body onload="FIRESTORM() ; callme()" >
         <div id="map" style="width:100%; height:100%"></div>
-	<script>
-          var carte = L.map('map').setView([46,5], 10);
-          L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          }).addTo(carte);
-          var Mark=L.marker([46, 5]).addTo(carte);
-        </script>
+
+    <script>
+    var carte = L.map('map').setView([46,5], 10);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(carte);
+    </script>
+
+
+<div>
+    <form><label for="NewVehicle">To create a new vehicle, fill the following form and then click on the map : </label>
+
+        <select name="Liquid Type" id="LiquidType">
+            <option value="">--Please choose an option--</option>
+            <option value="WATER">Water </option>
+            <option value="WATER_WITH_ADDITIVES">Water with additives</option>    
+            <option value="CARBON_DIOXIDE">Carbon dioxide</option>
+            <option value="POWDER">Powder</option>   
+        </select>
+        <select name="Vehicle Type" id="VehicleType">
+            <option value="">--Please choose an option--</option>
+            <option value="CAR">Car </option>
+            <option value="FIRE_ENGINE">Fire engine</option>    
+            <option value="PUMPER_TRUCK">Pumper truck</option>
+            <option value="WATER_TENDER">Water tender</option>
+            <option value="TURNTABLE_LADDER_TRUCK">Ladder truck</option>
+            <option value="TRUCK">Trucks</option>         
+        </select>
+        <button type="button" value="submit" onclick="AFINEADDITION()"> Create your vehicle :
+
+        </button>
+    </form>      
+</div>
 
 <h3>Range :</h3>
 <div class="rangeSlideContainer">

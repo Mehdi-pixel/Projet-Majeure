@@ -1,3 +1,16 @@
+function callme(){
+  var NovaMacchina=L.marker([46, 5]).addTo(carte);
+  carte.on('click', GenerateVehicle);
+    function GenerateVehicle(e) {
+        NovaMacchina.setLatLng(e.latlng);
+        window.NewCoords=NovaMacchina.getLatLng();
+  };
+}
+
+k = 0;
+
+
+
 function changeIntensity(){
   var x = document.getElementById("intensitySlider").value;
   document.getElementById("intensityNumber").innerHTML = x;
@@ -236,8 +249,76 @@ function HIGHWAYTOHELL(){
       });
     }
 
+function TOMYCOLLECTION(vType,lType,Coords){
+  ret = {"id":null,"lon":Coords.lng,"lat":Coords.lat,"type":vType,"efficiency":null,"liquidType":lType,"liquidQuantity":null,"liquidConsumption":null,"fuel":null,"fuelConsumption":null,"crewMember":null,"crewMemberCapacity":null,"facilityRefID":0};
+  ret.id = window.k++;
+  ret.efficiency = 5.0;
+
+  switch (vType){
+    case "TRUCK" :
+      ret.liquidQuantity = 1000.0;
+      ret.liquidConsumption = 10.0;
+      ret.fuel = 500.0;
+      ret.fuelConsumption = 1.0;
+      ret.crewMember = 4;
+      ret.crewMemberCapacity = ret.crewMember*2;
+      break;
+
+    case "FIRE_ENGINE" :
+      ret.liquidQuantity = 2000.0;
+      ret.liquidConsumption = 15.0;
+      ret.fuel = 750.0;
+      ret.fuelConsumption = 3.0;
+      ret.crewMember = 6;
+      ret.crewMemberCapacity = ret.crewMember*2;
+      break;
+
+    case "PUMPER_TRUCK" :
+      ret.liquidQuantity = 4000.0;
+      ret.liquidConsumption = 50.0;
+      ret.fuel = 1000.0;
+      ret.fuelConsumption = 10.0;
+      ret.crewMember = 4;
+      ret.crewMemberCapacity = ret.crewMember*2;
+      break;
+
+    case "WATER_TENDER" :
+      ret.liquidQuantity = 15000.0;
+      ret.liquidConsumption = 100.0;
+      ret.fuel = 5000.0;
+      ret.fuelConsumption = 35.0;
+      ret.crewMember = 21;
+      ret.crewMemberCapacity = ret.crewMember*2;
+      break;
+
+    case "TURNTABLE_LADDER_TRUCK" :
+      ret.liquidQuantity = 1500.0;
+      ret.liquidConsumption = 20.0;
+      ret.fuel = 600.0; 
+      ret.fuelConsumption = 2.0;
+      ret.crewMember = 12;
+      ret.crewMemberCapacity = ret.crewMember*2;
+      break;
+  }
+  ret = JSON.stringify(ret);
+  console.log(ret);
+  return ret;
+}
 
 
 
 
+function AFINEADDITION() {
+  var vType1 = document.getElementById('VehicleType');
+  console.log(vType1);
+  var vType = vType1.options[vType1.selectedIndex].value;
 
+  var lType = document.getElementById('LiquidType').value;
+
+
+
+  fetch('http://localhost:8081/vehicle', {method:'POST', body: TOMYCOLLECTION(vType,lType,window.NewCoords),headers: new Headers({'content-type': 'application/json'})})
+  .then(results => results.json())
+  .then(console.log);
+
+}
