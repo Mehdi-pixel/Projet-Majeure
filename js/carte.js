@@ -215,14 +215,13 @@ function filter(Feux,seuil){
 }
 
 
-
 function Rodeo(data){
   console.log(data);
   for(let j=1; j<data.length; j++){
     var Vehicle = L.marker([data[j].lat, data[j].lon]).addTo(carte);
     Vehicle.bindPopup(''); // Je ne mets pas de texte par défaut
     var Linfodelvagone = Vehicle.getPopup();
-    Linfodelvagone.setContent("<p>"+ "Available crew : " + data[j].crewMember + "<br />" + "Maximum crew : " + data[j].crewMemberCapacity + "<br />" + "Efficiency : " + data[j].efficiency + "<br />" + "Remaining fuel : " + data[j].fuel + "<br />" + "Fuel consumption : " + data[j].fuelConsumption + "<br />" + "Currently loaded liquid : " + data[j].liquidType + "<br />" + "Available liquid : " + data[j].liquidQuantity + "<br />" + "Liquid consumption : " + data[j].liquidConsumption +  "</p>");
+    Linfodelvagone.setContent("<p>"+ "ID of the vehicle :" + data[j].id + "<br />" + "Type of the vehicle : " + data[j].type + "<br />" +  "Available crew : " + data[j].crewMember + "<br />" + "Maximum crew : " + data[j].crewMemberCapacity + "<br />" + "Efficiency : " + data[j].efficiency + "<br />" + "Remaining fuel : " + data[j].fuel + "<br />" + "Fuel consumption : " + data[j].fuelConsumption + "<br />" + "Currently loaded liquid : " + data[j].liquidType + "<br />" + "Available liquid : " + data[j].liquidQuantity + "<br />" + "Liquid consumption : " + data[j].liquidConsumption +  "</p>");
 
   }
 
@@ -255,6 +254,17 @@ function TOMYCOLLECTION(vType,lType,Coords){
   ret.efficiency = 5.0;
 
   switch (vType){
+
+
+    case "CAR" :
+      ret.liquidQuantity = 100.0;
+      ret.liquidConsumption = 1.0;
+      ret.fuel = 250.0;
+      ret.fuelConsumption = 0.5;
+      ret.crewMember = 1;
+      ret.crewMemberCapacity = ret.crewMember*2;
+      break;  
+
     case "TRUCK" :
       ret.liquidQuantity = 1000.0;
       ret.liquidConsumption = 10.0;
@@ -282,7 +292,7 @@ function TOMYCOLLECTION(vType,lType,Coords){
       ret.crewMemberCapacity = ret.crewMember*2;
       break;
 
-    case "WATER_TENDER" :
+    case "WATER_TENDERS" :
       ret.liquidQuantity = 15000.0;
       ret.liquidConsumption = 100.0;
       ret.fuel = 5000.0;
@@ -320,5 +330,7 @@ function AFINEADDITION() {
   fetch('http://localhost:8081/vehicle', {method:'POST', body: TOMYCOLLECTION(vType,lType,window.NewCoords),headers: new Headers({'content-type': 'application/json'})})
   .then(results => results.json())
   .then(console.log);
+
+  HIGHWAYTOHELL();
 
 }
