@@ -1,3 +1,21 @@
+function callme(){
+  var carte = L.map('map').setView([46,5], 10);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(carte);
+  var NovaMacchina=L.marker([46, 5]).addTo(carte);
+  carte.on('click', GenerateVehicle);
+    function GenerateVehicle(e) {
+        NovaMacchina.setLatLng(e.latlng);
+        NewCoords=NovaMacchina.getLatLng();
+        console.log("It IS called");
+  };
+}
+
+
+
+
+
 function changeIntensity(){
   var x = document.getElementById("intensitySlider").value;
   document.getElementById("intensityNumber").innerHTML = x;
@@ -241,3 +259,12 @@ function HIGHWAYTOHELL(){
 
 
 
+// function AFINEADDITION() {
+//   var VehiType = document.getElementById('VehicleType').value;
+//   var LiqType = document.getElementById('LiquidType').value;
+
+
+
+//   fetch('https://localhost:8081/vehicle', {method:'POST', })
+
+// }
