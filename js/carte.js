@@ -141,12 +141,6 @@ function coco(type){
 
     var tenIntensityFires = L.layerGroup(tenIntensityFireArray).addTo(carte);
 
-
-    for (let i=0; i < data.length; i++){
-
-
-
-    }
     var Overlay = {
       "Feux secs": Afires,
       "Feux gras": Bfires,
@@ -216,17 +210,104 @@ function filter(Feux,seuil){
 
 
 function Rodeo(data){
+
+  CarVehicleArray=[];
+  TruckVehicleArray=[];
+  FireEngineVehicleArray=[];
+  PumperTruckVehicleArray=[];
+  WaterTenderVehicleArray=[];
+  TurnTableLadderTruckVehicleArray=[];
+
+  WaterLiquidArray=[];
+  WaterWithAdditiveLiquidArray=[];
+  PowderLiquidArray=[];
+  CarbonDioxideLiquidArray=[];
+
   console.log(data);
   for(let j=1; j<data.length; j++){
     var Vehicle = L.marker([data[j].lat, data[j].lon]).addTo(carte);
+    switch(data[j].type){
+      case "CAR":
+        CarVehicleArray.push(Vehicle)
+        break
+      case "TRUCK":
+        TruckVehicleArray.push(Vehicle)
+        break
+      case "FIRE_ENGINE":
+        FireEngineVehicleArray.push(Vehicle)
+        break
+      case "PUMPER_TRUCK":
+        PumperTruckVehicleArray.push(Vehicle)
+        break
+      case "WATER_TENDERS":
+        WaterTenderVehicleArray.push(Vehicle)
+        break
+      case "TURNTABLE_LADDER_TRUCK":
+        TurnTableLadderTruckVehicleArray.push(Vehicle)    
+        break
+    }
+    switch(data[j].liquidType){
+      case "WATER":
+        WaterLiquidArray.push(Vehicle)
+        break
+      case "WATER_WITH_ADDITIVES":
+        WaterWithAdditiveLiquidArray.push(Vehicle)
+        break
+      case "POWDER":
+        PowderLiquidArray.push(Vehicle)
+        break
+      case "CARBON_DIOXIDE":
+        CarbonDioxideLiquidArray.push(Vehicle)
+        break
+
+    }
+
     Vehicle.bindPopup(''); // Je ne mets pas de texte par défaut
     var Linfodelvagone = Vehicle.getPopup();
     Linfodelvagone.setContent("<p>"+ "ID of the vehicle :" + data[j].id + "<br />" + "Type of the vehicle : " + data[j].type + "<br />" +  "Available crew : " + data[j].crewMember + "<br />" + "Maximum crew : " + data[j].crewMemberCapacity + "<br />" + "Efficiency : " + data[j].efficiency + "<br />" + "Remaining fuel : " + data[j].fuel + "<br />" + "Fuel consumption : " + data[j].fuelConsumption + "<br />" + "Currently loaded liquid : " + data[j].liquidType + "<br />" + "Available liquid : " + data[j].liquidQuantity + "<br />" + "Liquid consumption : " + data[j].liquidConsumption +  "</p>");
 
   }
 
-}
 
+
+
+
+
+  var WaterLiquidArray = L.layerGroup(WaterLiquidArray).addTo(carte);
+  var WaterWithAdditiveLiquidArray = L.layerGroup(WaterWithAdditiveLiquidArray).addTo(carte);
+  var CarbonDioxideLiquidArray = L.layerGroup(CarbonDioxideLiquidArray).addTo(carte);
+  var PowderLiquidArray = L.layerGroup(PowderLiquidArray).addTo(carte);
+
+
+
+  var CarVehicleArray = L.layerGroup(CarVehicleArray).addTo(carte);
+  var TruckVehicleArray = L.layerGroup(TruckVehicleArray).addTo(carte);
+  var FireEngineVehicleArray = L.layerGroup(FireEngineVehicleArray).addTo(carte);
+  var PumperTruckVehicleArray = L.layerGroup(PumperTruckVehicleArray).addTo(carte);
+  var WaterTenderVehicleArray = L.layerGroup(WaterTenderVehicleArray).addTo(carte);
+  var TurnTableLadderTruckVehicleArray = L.layerGroup(TurnTableLadderTruckVehicleArray).addTo(carte);
+
+  var OverlayVehicle = {
+    "Cars": CarVehicleArray,
+    "Trucks": TruckVehicleArray,
+    "Fire Engine": FireEngineVehicleArray,
+    "Pumper Truck": PumperTruckVehicleArray,
+    "Water Tender": WaterTenderVehicleArray,
+    "Turn-Table Ladder Truck": TurnTableLadderTruckVehicleArray,
+  };
+
+  var OverlayLiquid = {
+    "Water": WaterLiquidArray,
+    "Water with additives": WaterWithAdditiveLiquidArray,
+    "Powder": PowderLiquidArray,
+    "Carbon dioxide": CarbonDioxideLiquidArray,
+  };
+
+  L.control.layers(null,OverlayVehicle).addTo(carte);
+  L.control.layers(null,OverlayLiquid).addTo(carte);
+
+
+}
 
 function HIGHWAYTOHELL(){
   fetch("http://localhost:8081/vehicle")
