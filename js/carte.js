@@ -203,13 +203,15 @@ function filter(Feux,seuil){
 
 
   */
-
-
-
 }
 
 
+
+window.Liaison=[];
+
+
 function Rodeo(data){
+
 
   CarVehicleArray=[];
   TruckVehicleArray=[];
@@ -261,11 +263,28 @@ function Rodeo(data){
         break
 
     }
-
-    Vehicle.bindPopup(''); // Je ne mets pas de texte par défaut
+    console.log("<button type='button' onclick='seekandmodify("+ data[j].id + "," +
+       '"' + document.getElementById('VehicleType').value+ '"' + "," + 
+       '"' + document.getElementById('LiquidType').value + '")"' +
+        "> Change </button>" + "</p>");
+    Vehicle.bindPopup(''); 
     var Linfodelvagone = Vehicle.getPopup();
-    Linfodelvagone.setContent("<p>"+ "ID of the vehicle :" + data[j].id + "<br />" + "Type of the vehicle : " + data[j].type + "<br />" +  "Available crew : " + data[j].crewMember + "<br />" + "Maximum crew : " + data[j].crewMemberCapacity + "<br />" + "Efficiency : " + data[j].efficiency + "<br />" + "Remaining fuel : " + data[j].fuel + "<br />" + "Fuel consumption : " + data[j].fuelConsumption + "<br />" + "Currently loaded liquid : " + data[j].liquidType + "<br />" + "Available liquid : " + data[j].liquidQuantity + "<br />" + "Liquid consumption : " + data[j].liquidConsumption +  "</p>");
+    Linfodelvagone.setContent("<p>"+ "ID of the vehicle :" + data[j].id + "<br />" + "Type of the vehicle : " + data[j].type + "<br />" +
+      "Available crew : " + data[j].crewMember + "<br />" + "Maximum crew : " +
+       data[j].crewMemberCapacity + "<br />" + "Efficiency : " + data[j].efficiency +
+        "<br />" + "Remaining fuel : " + data[j].fuel + "<br />" + "Fuel consumption : " + data[j].fuelConsumption +
+         "<br />" + "Currently loaded liquid : " + data[j].liquidType + "<br />" + "Available liquid : " +
+          data[j].liquidQuantity + "<br />" + "Liquid consumption : " + data[j].liquidConsumption + 
+     "<br />" + "<button type='button' onclick='seekanddestroy("+ data[j].id +")'>  Physically remove </button>" +
+      "<br />" + 
+      "<button type='button' onclick='seekandmodify("+ data[j].id + "," +
+       '"' + document.getElementById('VehicleType').value+ '"' + "," + 
+       '"' + document.getElementById('LiquidType').value + '")'+ "'" +
+        "> Change </button>" + "</p>");
+    var vroum = new Object();
 
+    vroum = {"marker" : Vehicle, "id" : data[j].id}
+    window.Liaison.push(vroum);
   }
 
 
@@ -329,6 +348,7 @@ function HIGHWAYTOHELL(){
       });
     }
 
+
 function TOMYCOLLECTION(vType,lType,Coords){
   ret = {"id":null,"lon":Coords.lng,"lat":Coords.lat,"type":vType,"efficiency":null,"liquidType":lType,"liquidQuantity":null,"liquidConsumption":null,"fuel":null,"fuelConsumption":null,"crewMember":null,"crewMemberCapacity":null,"facilityRefID":0};
   ret.id = window.k++;
@@ -354,7 +374,6 @@ function TOMYCOLLECTION(vType,lType,Coords){
       ret.crewMember = 4;
       ret.crewMemberCapacity = ret.crewMember*2;
       break;
-
     case "FIRE_ENGINE" :
       ret.liquidQuantity = 2000.0;
       ret.liquidConsumption = 15.0;
@@ -400,11 +419,10 @@ function TOMYCOLLECTION(vType,lType,Coords){
 
 
 function AFINEADDITION() {
-  var vType1 = document.getElementById('VehicleType');
-  console.log(vType1);
-  var vType = vType1.options[vType1.selectedIndex].value;
-
+  var vType = document.getElementById('VehicleType').value;
+  console.log("Newestest vType : "+vType);
   var lType = document.getElementById('LiquidType').value;
+  console.log("lType : " + lType);
 
 
 
@@ -415,3 +433,89 @@ function AFINEADDITION() {
   HIGHWAYTOHELL();
 
 }
+
+
+
+
+
+
+function seekanddestroy(id){  fetch("http://localhost:8081/vehicle/"+id , {method:'DELETE'})
+.then(
+  function(response) {
+    if (response.status !== 200) {
+      console.log('Looks like there was a problem. Status Code: ' +
+        response.status);
+      return;
+    }
+
+    // Examine the text in the response
+    console.log("You shall go to the shadow realm")
+  }
+)
+.catch(function(err) {
+  console.log('Fetch Error :-S', err);
+});
+
+}
+
+function ElDiablo(data,ret){
+  console.log(data)
+  data.liquidType=ret[1];
+  data.type=ret[0];
+  console.log(data)
+  data=JSON.stringify(data);
+  fetch("http://localhost:8081/vehicle/"+data.id , {method:'PUT', body:data, headers: new Headers({'content-type': 'application/json'})})
+  .then(results => results.json())
+  .then(console.log);
+
+}
+
+
+function seekandmodify(id,vType,lType){
+  ret = [vType, lType];
+  fetch("http://localhost:8081/vehicle/"+id)
+  .then(
+    function(response) {
+      if (response.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          response.status);
+        return;
+      }
+
+      // Examine the text in the response
+        response.json()
+    .then(data => ElDiablo(data, ret));
+    }
+  )
+  .catch(function(err) {
+    console.log('Fetch Error :-S', err);
+  });
+
+}
+
+
+
+function seekanddestroy(id){
+
+  let i = 0;
+    while (window.Liaison[i].id != id){
+      if (i==window.Liaison.length){
+        console.log("Lmao get fucked bitch")
+        break
+      }
+      i++;
+    }
+
+    
+
+    fetch("http://localhost:8081/vehicle/"+id,{method:'DELETE'});
+    carte.removeLayer(window.Liaison[i].marker);
+    const index = window.Liaison.indexOf(window.Liaison[i]);
+    if (index > -1) {
+      window.Liaison.splice(index, 1);
+}
+  console.log(window.Liaison); 
+
+    
+}
+
