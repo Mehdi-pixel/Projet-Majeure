@@ -439,6 +439,7 @@ function AFINEADDITION() {
 
 
 
+
 function seekanddestroy(id){  fetch("http://localhost:8081/vehicle/"+id , {method:'DELETE'})
 .then(
   function(response) {
