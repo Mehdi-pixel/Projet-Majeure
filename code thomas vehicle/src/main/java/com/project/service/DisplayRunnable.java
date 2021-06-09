@@ -99,59 +99,59 @@ public class DisplayRunnable implements Runnable {
 	}
 	
 	public void deplacement() {
-		//latitude vehicule dans un radius de 5.0 du feu
+		//latitude vehicule dans un radius de 0.03 du feu
 		System.out.println(v.getLat()+" "+v.getLon());
 		
-		if(Math.abs(v.getLat()-this.fireLat) <= 5.0) {
+		if(Math.abs(v.getLat()-this.fireLat) <= 0.03) {
 			v.setLat(this.fireLat);
 		}
 		else if (fireLat>0) {
 			if ((v.getLat()>0) && (v.getLat()>fireLat)) {
-				v.setLat(v.getLat()-5.0);
+				v.setLat(v.getLat()-0.03);
 			}
 			else if ((v.getLat()>0) && (v.getLat()<fireLat)){
-				v.setLat(v.getLat()+5.0);
+				v.setLat(v.getLat()+0.03);
 			}
 			else {
-				v.setLat(v.getLat()+5.0);
+				v.setLat(v.getLat()+0.03);
 			}
 		}
 		else {
 			if ((v.getLat()<0) && (v.getLat()<fireLat)) {
-				v.setLat(v.getLat()+5.0);
+				v.setLat(v.getLat()+0.03);
 			}
 			else if ((v.getLat()<0) && (v.getLat()>fireLat)){
-				v.setLat(v.getLat()-5.0);
+				v.setLat(v.getLat()-0.03);
 			}
 			else {
-				v.setLat(v.getLat()-5.0);
+				v.setLat(v.getLat()-0.03);
 			}
 		}
 		
-		//longitude vehicule dans un radius de 5.0 du feu
-		if(Math.abs(v.getLon()-this.fireLon) <= 5.0) {
+		//longitude vehicule dans un radius de 0.03 du feu
+		if(Math.abs(v.getLon()-this.fireLon) <= 0.03) {
 			v.setLon(this.fireLon);
 		}
 		else if (fireLon>0) {
 			if ((v.getLon()>0) && (v.getLon()>fireLon)) {
-				v.setLon(v.getLon()-5.0);
+				v.setLon(v.getLon()-0.03);
 			}
 			else if ((v.getLon()>0) && (v.getLon()<fireLon)){
-				v.setLon(v.getLon()+5.0);
+				v.setLon(v.getLon()+0.03);
 			}
 			else {
-				v.setLon(v.getLon()+5.0);
+				v.setLon(v.getLon()+0.03);
 			}
 		}
 		else {
 			if ((v.getLon()<0) && (v.getLon()<fireLon)) {
-				v.setLon(v.getLon()+5.0);
+				v.setLon(v.getLon()+0.03);
 			}
 			else if ((v.getLon()<0) && (v.getLon()>fireLon)){
-				v.setLon(v.getLon()-5.0);
+				v.setLon(v.getLon()-0.03);
 			}
 			else {
-				v.setLon(v.getLon()-5.0);
+				v.setLon(v.getLon()-0.03);
 			}
 		}	
 	}
