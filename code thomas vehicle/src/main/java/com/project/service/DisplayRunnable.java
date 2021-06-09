@@ -31,8 +31,8 @@ public class DisplayRunnable implements Runnable {
 	}
 
 	public void updateCoord() {
-		vrep.save(v);
 		v.setId(v.getIdRemote());
+		vrep.save(v);
 		String urlvehicle = "http://127.0.0.1:8081/vehicle/"+v.getIdRemote();//url pour communiquer avec le Fire Simulator
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<VehicleDto> request = new HttpEntity<>(v);
